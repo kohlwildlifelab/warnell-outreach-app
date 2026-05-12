@@ -360,14 +360,15 @@ server <- function(input, output) {
   )
   
   # --- IMAGE EXPORT ---
-  observeEvent(input$screenshot, {
+observeEvent(input$screenshot, {
     safe_name <- gsub("[^[:alnum:]]", "_", input$fac_name)
-    if(safe_name == "") safe_name <- "Warnell_Score"
+    if(safe_name == "" || is.na(safe_name)) safe_name <- "Warnell_Outreach_Score"
     
     shinyscreenshot::screenshot(
+      selector = "body",        # Captures the entire visible page
       filename = paste0(safe_name, "_", Sys.Date()),
-      downloadformat = "jpg",
-      scale = 2
+      scale = 2,                # Higher quality
+      downloadformat = "jpg"
     )
   })
 }
