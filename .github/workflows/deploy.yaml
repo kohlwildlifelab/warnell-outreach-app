@@ -1,3 +1,6 @@
+- name: Install Dependencies
+        run: Rscript -e 'install.packages(c("shinylive", "shinydashboard", "shinyscreenshot"))'
+
 name: Deploy Shinylive App
 on:
   push:
