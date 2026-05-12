@@ -30,6 +30,22 @@ ui <- dashboardPage(
   dashboardSidebar(disable = TRUE),
   dashboardBody(
     tags$head(tags$style(HTML(custom_css))),
+
+    tags$script(HTML("
+      $(document).on('shiny:filedownload', function(event) {
+        if (typeof(shinylive) !== 'undefined') {
+          event.preventDefault();
+          const blob = new Blob([event.content], {type: event.contentType});
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = event.filename;
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      });
+    ")),
     
     fluidRow(
       column(width = 10, offset = 1,
