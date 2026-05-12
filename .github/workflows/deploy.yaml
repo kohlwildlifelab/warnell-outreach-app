@@ -1,5 +1,5 @@
 - name: Install Dependencies
-        run: Rscript -e 'install.packages(c("shinylive", "shinydashboard", "shinyscreenshot"))'
+        run: Rscript -e 'install.packages(c("shinylive", "httpuv", "shinydashboard", "shinyscreenshot"))'
 
 name: Deploy Shinylive App
 on:
