@@ -3,9 +3,7 @@ library(shinydashboard)
 library(shinyscreenshot)
 
 # --- HELPER FUNCTION ---
-# Ensures 0 is returned instead of NA, and enforces non-negative math
 calc_score <- function(inputs, weights, fte_weight) {
-  # Replace NA with 0 and ensure no negative values reach the calculation
   clean_inputs <- sapply(inputs, function(x) ifelse(is.na(x) || x < 0, 0, x))
   sum(clean_inputs * weights) * fte_weight
 }
@@ -235,17 +233,17 @@ server <- function(input, output) {
     0.5 / fte
   })
   
-  # Presentation Reactives using calc_score
+  # Presentation Reactives
   t_prof   <- reactive({ calc_score(input$b_prof, 2, w()) })
   t_nprof  <- reactive({ calc_score(input$b_nprof, 2, w()) })
   t_inv    <- reactive({ calc_score(c(input$b_inv, input$p_inv), c(3, 1), w()) })
   t_key    <- reactive({ calc_score(c(input$b_key, input$p_key), c(4.5, 2), w()) })
   
-  # Publication Reactives using calc_score
-  t_book   <- reactive({ calc_score(input$q_book, 16, w()) }) # 15 base + 1 prestige
-  t_chap   <- reactive({ calc_score(input$q_chap, 10, w()) }) # 9 base + 1 prestige
-  t_jrnl   <- reactive({ calc_score(input$q_jrnl, 10, w()) }) # 9 base + 1 prestige
-  t_proc   <- reactive({ calc_score(input$q_proc, 8, w()) })  # 7 base + 1 prestige
+  # Publication Reactives
+  t_book   <- reactive({ calc_score(input$q_book, 16, w()) })
+  t_chap   <- reactive({ calc_score(input$q_chap, 10, w()) })
+  t_jrnl   <- reactive({ calc_score(input$q_jrnl, 10, w()) })
+  t_proc   <- reactive({ calc_score(input$q_proc, 8, w()) })
   t_out    <- reactive({ calc_score(c(input$q_out, input$ma_out, input$mi_out), c(5, 1.5, 2.5), w()) })
   t_tech   <- reactive({ calc_score(c(input$q_tech, input$ma_tech, input$mi_tech), c(10, 2.5, 5), w()) })
   t_gray   <- reactive({ calc_score(input$q_gray, 4, w()) })
@@ -254,18 +252,17 @@ server <- function(input, output) {
   t_smp    <- reactive({ calc_score(input$q_smp, 0.1, w()) })
   t_smprod <- reactive({ calc_score(input$q_smprod, 1.5, w()) })
   
-  # Other Reactives using calc_score
+  # Other Reactives
   t_event  <- reactive({ calc_score(c(input$e_new, input$e_rep, input$e_sub), c(9, 2.25, 13.5), w()) })
   t_fnew   <- reactive({ calc_score(c(input$fn_s, input$fn_n, input$fn_sub), c(2.5, 10, 20), w()) })
   t_fong   <- reactive({ calc_score(c(input$fo_s, input$fo_n, input$fo_sub), c(1.5, 5.5, 11), w()) })
   t_tasite <- reactive({ calc_score(input$ta_site, 0.8, w()) })
   t_tarem  <- reactive({ calc_score(input$ta_remote, 0.2, w()) })
-  t_award  <- reactive({ calc_score(c(input$aw_b, input$aw_p), c(5, 7.5), 1.0) }) # Award prestige is flat, usually not FTE scaled in rubric? Change 1.0 to w() if needed
+  t_award  <- reactive({ calc_score(c(input$aw_b, input$aw_p), c(5, 7.5), 1.0) })
   t_mshort <- reactive({ calc_score(input$m_short, 0.5, w()) })
   t_mnat   <- reactive({ calc_score(input$m_nat, 2, w()) })
   t_mfeat  <- reactive({ calc_score(input$m_feat, 5, w()) })
   
-  # Spotlight is special (Average)
   t_spot   <- reactive({ 
     fac <- ifelse(is.na(input$s_fac) || input$s_fac < 0, 0, input$s_fac)
     ado <- ifelse(is.na(input$s_ado) || input$s_ado < 0, 0, input$s_ado)
@@ -299,7 +296,6 @@ server <- function(input, output) {
   output$t_mfeat_out <- renderText({ round(t_mfeat(), 2) })
   output$t_spot_out <- renderText({ round(t_spot(), 2) })
   
-  # Grand Total Calculation
   grand_total_val <- reactive({
     sum(t_prof(), t_nprof(), t_inv(), t_key(), t_book(), t_chap(), t_jrnl(), t_proc(), t_out(), 
         t_tech(), t_gray(), t_app(), t_pod(), t_smp(), t_smprod(), t_event(), 
@@ -307,52 +303,30 @@ server <- function(input, output) {
   })
   output$grand_total <- renderText({ round(grand_total_val(), 2) })
   
-  # --- UPDATED CSV Export Handler with Counts ---
+  # --- UPDATED CSV HANDLER (Optimized for Browser) ---
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste("Outreach_Score Breakdown_", input$fac_name, "_", Sys.Date(), ".csv", sep = "")
+      paste0("Outreach_Breakdown_", gsub(" ", "_", input$fac_name), "_", Sys.Date(), ".csv")
     },
     content = function(file) {
-      # Internal helper to handle NA in raw sums
       raw_sum <- function(...) {
         sum(sapply(list(...), function(x) ifelse(is.na(x) || x < 0, 0, x)))
       }
       
-      count_pres  <- raw_sum(input$b_prof, input$b_nprof, input$b_inv, input$p_inv, input$b_key, input$p_key)
-      
-      count_pubs  <- raw_sum(input$q_book, input$q_chap, input$q_jrnl, input$q_proc, 
-                             input$q_out, input$ma_out, input$mi_out, 
-                             input$q_tech, input$ma_tech, input$mi_tech, 
-                             input$q_gray, input$q_app, input$ma_app, input$mi_app, 
-                             input$q_pod, input$q_smp, input$q_smprod)
-      
-      count_events <- raw_sum(input$e_new, input$e_rep, input$e_sub)
-      count_funding <- raw_sum(input$fn_s, input$fn_n, input$fn_sub, input$fo_s, input$fo_n, input$fo_sub)
-      count_tech    <- raw_sum(input$ta_site, input$ta_remote)
-      count_awards  <- raw_sum(input$aw_b, input$aw_p)
-      count_media   <- raw_sum(input$m_short, input$m_nat, input$m_feat)
-      
-      # 3. Build the Data Frame (Updated to remove the separator row)
       export_df <- data.frame(
-        "Faculty_Name" = input$fac_name,
-        "FTE" = input$fac_fte,
-        "Category" = c(
-          "I. Presentations",
-          "II. Publications",
-          "III. Events",
-          "IV. Funding",
-          "V. Technical Assistance",
-          "VI. Awards",
-          "VII. Media",
-          "VIII. Spotlight",
-          "TOTALS"
+        "Category" = c("Presentations", "Publications", "Events", "Funding", "Technical", "Awards", "Media", "Spotlight", "TOTAL"),
+        "Count" = c(
+          raw_sum(input$b_prof, input$b_nprof, input$b_inv, input$p_inv, input$b_key, input$p_key),
+          raw_sum(input$q_book, input$q_chap, input$q_jrnl, input$q_proc, input$q_out, input$ma_out, input$mi_out, input$q_tech, input$ma_tech, input$mi_tech, input$q_gray, input$q_app, input$ma_app, input$mi_app, input$q_pod, input$q_smp, input$q_smprod),
+          raw_sum(input$e_new, input$e_rep, input$e_sub),
+          raw_sum(input$fn_s, input$fn_n, input$fn_sub, input$fo_s, input$fo_n, input$fo_sub),
+          raw_sum(input$ta_site, input$ta_remote),
+          raw_sum(input$aw_b, input$aw_p),
+          raw_sum(input$m_short, input$m_nat, input$m_feat),
+          "N/A",
+          ""
         ),
-        "Item_Count" = c(
-          count_pres, count_pubs, count_events, count_funding, 
-          count_tech, count_awards, count_media, "N/A",
-          sum(count_pres, count_pubs, count_events, count_funding, count_tech, count_awards, count_media)
-        ),
-        "Adjusted_Score" = c(
+        "Score" = c(
           round(t_prof() + t_nprof() + t_inv() + t_key(), 2),
           round(t_book() + t_chap() + t_jrnl() + t_proc() + t_out() + t_tech() + t_gray() + t_app() + t_pod() + t_smp() + t_smprod(), 2),
           round(t_event(), 2),
@@ -364,22 +338,20 @@ server <- function(input, output) {
           round(grand_total_val(), 2)
         )
       )
-      
-      write.csv(export_df, file, row.names = FALSE, na = "")
+      # In Shinylive, we must ensure the file is written to the provided path
+      write.csv(export_df, file, row.names = FALSE)
     }
   )
   
-  # Image Export with safety check for filename
+  # --- IMAGE EXPORT ---
   observeEvent(input$screenshot, {
-    # Replace non-alphanumeric characters with underscores
     safe_name <- gsub("[^[:alnum:]]", "_", input$fac_name)
-    if(safe_name == "") safe_name <- "Unnamed_Faculty"
+    if(safe_name == "") safe_name <- "Warnell_Score"
     
     shinyscreenshot::screenshot(
-      filename = paste0("Outreach_Summary_", safe_name, "_", Sys.Date()),
-      scale = 2,
+      filename = paste0(safe_name, "_", Sys.Date()),
       downloadformat = "jpg",
-      server_dir = NULL
+      scale = 2
     )
   })
 }
