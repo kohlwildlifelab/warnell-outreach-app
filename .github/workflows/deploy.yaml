@@ -23,7 +23,7 @@ jobs:
         run: Rscript -e 'install.packages(c("shinylive", "httpuv"))'
 
       - name: Export App
-        run: Rscript -e 'shinylive::export("my_app", "site")'
+        run: Rscript -e 'shinylive::export(".", "site")'
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
