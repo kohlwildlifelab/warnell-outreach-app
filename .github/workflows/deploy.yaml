@@ -1,10 +1,7 @@
-- name: Install Dependencies
-        run: Rscript -e 'install.packages(c("shinylive", "httpuv", "shinydashboard", "shinyscreenshot"))'
-
 name: Deploy Shinylive App
 on:
   push:
-    branches: [main, master] # Works whether your branch is main or master
+    branches: [main, master]
 
 jobs:
   build-deploy:
@@ -23,7 +20,8 @@ jobs:
           use-public-rspm: true
 
       - name: Install Dependencies
-        run: Rscript -e 'install.packages(c("shinylive", "httpuv"))'
+        run: |
+          Rscript -e 'install.packages(c("shinylive", "httpuv", "shinydashboard", "shinyscreenshot", "dplyr", "ggplot2"))'
 
       - name: Export App
         run: Rscript -e 'shinylive::export(".", "site")'
