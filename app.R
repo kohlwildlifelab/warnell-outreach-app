@@ -1,6 +1,7 @@
 library(shiny)
 library(shinydashboard)
 library(shinyscreenshot)
+library(shinyjs)
 
 # --- HELPER FUNCTION ---
 calc_score <- function(inputs, weights, fte_weight) {
@@ -22,6 +23,34 @@ custom_css <- "
   .shiny-input-container { margin-bottom: 0px !important; }
   input[type='number'] { height: 28px; padding: 2px; text-align: center; width: 100%; }
   .header-box { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #bdc3c7; }
+@media print {
+  /* Hide the export buttons and instructions during print */
+  .btn, .header-box p, .main-header, .download-button {
+    display: none !important;
+  }
+  
+  /* Ensure the background colors and totals show up */
+  .total-footer {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+  }
+  
+  .total-column {
+    background-color: #f0f0f0 !important;
+    -webkit-print-color-adjust: exact;
+  }
+  
+  /* Expand the content to fill the page */
+  .content-wrapper {
+    background-color: white !important;
+  }
+  
+  /* Remove scrollbars from print */
+  body {
+    overflow: visible !important;
+  }
+}
 "
 
 # --- UI SECTION ---
