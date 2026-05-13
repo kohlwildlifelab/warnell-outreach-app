@@ -253,10 +253,10 @@ ui <- dashboardPage(
                           downloadButton("downloadData", "Export Data (CSV)", 
                                          style = "width: 100%; background-color: #34495e; color: white; border: none;")
                    ),
-                   column(6, 
-                          actionButton("print_page", "Print to PDF", 
-                                      icon = icon("print"),
-                                      style = "width: 100%; background-color: #2980b9; color: white; border: none;")
+            actionButton("print_page", "Print to PDF", 
+             icon = icon("print"),
+             onclick = "window.print();",  # <--- Direct JS call
+             style = "width: 100%; background-color: #2980b9; color: white; border: none;")
                    )
                  )
              ),
@@ -389,10 +389,6 @@ server <- function(input, output) {
     contentType = "text/csv" # Adding this helps the browser identify the blob
   )
   
-  # --- IMAGE EXPORT ---
-observeEvent(input$print_page, {
-    shinyjs::runjs("window.print();")
-})
 }
 
 shinyApp(ui, server)
