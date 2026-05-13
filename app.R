@@ -163,14 +163,14 @@ ui <- dashboardPage(
                                 tags$th(rowspan=2, colspan=2, "Calculated Score", style="width: 22%;")
                               ),
                               tags$tr(
-                                tags$th("Qty"), tags$th("$"),
-                                tags$th("Qty"), tags$th("$"),
-                                tags$th("Qty"), tags$th("$")
+                                tags$th("Qty"), tags$th("Total $"),
+                                tags$th("Qty"), tags$th("Total $"),
+                                tags$th("Qty"), tags$th("Total $")
                               )
                             ),
                             tags$tbody(
                               tags$tr(
-                                tags$td(class="label-col", "New Awards"),
+                                tags$td(class="label-col", "New Funding"),
                                 tags$td(numericInput("fn_s", NULL, 0)), tags$td(numericInput("fn_s_d", NULL, 0)),
                                 tags$td(numericInput("fn_n", NULL, 0)), tags$td(numericInput("fn_n_d", NULL, 0)),
                                 tags$td(numericInput("fn_sub", NULL, 0)), tags$td(numericInput("fn_sub_d", NULL, 0)),
@@ -269,7 +269,9 @@ ui <- dashboardPage(
                               tags$tr(tags$th("Faculty"), tags$th("ADO"), tags$th("Avg"))
                             ),
                             tags$tbody(
-                              tags$tr(tags$td(class="label-col", "Significant Effort"), tags$td(numericInput("s_fac", NULL, 0)), tags$td(numericInput("s_ado", NULL, 0)), tags$td(textOutput("spot_avg_display")), tags$td(class="total-column", textOutput("t_spot_out", inline=T))),
+                              tags$tr(tags$td(class="label-col", "Significant Effort"), tags$td(numericInput("s_fac", NULL, value = 0, min = 0, max = 18, step = 1)), 
+                                      tags$td(numericInput("s_ado", NULL, , value = 0, min = 0, max = 18, step = 1)), 
+                                      tags$td(textOutput("spot_avg_display")), tags$td(class="total-column", textOutput("t_spot_out", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=5, "")),
                               tags$tr(class="subtotal-row", tags$td(colspan=4, "SUBTOTAL SCORE:"), tags$td(textOutput("s_total_8", inline=T)))
                             ))
@@ -383,6 +385,11 @@ server <- function(input, output, session) {
   
   # VIII Logic
   spot_avg <- reactive({ 
+    # Helper function to keep value between 0 and 18
+    clamp <- function(x) {
+        val <- as.numeric(x %||% 0)
+        max(0, min(18, val))
+  }
     fac <- if(!is.null(input$s_fac)) as.numeric(input$s_fac) else 0
     ado <- if(!is.null(input$s_ado)) as.numeric(input$s_ado) else 0
     (fac + ado) / 2 
