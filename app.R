@@ -225,9 +225,9 @@ ui <- dashboardPage(
                                          style = "width: 100%; background-color: #34495e; color: white; border: none;")
                    ),
                    column(6, 
-                          actionButton("screenshot", "Export Image (JPG)", 
-                                       icon = icon("camera"),
-                                       style = "width: 100%; background-color: #27ae60; color: white; border: none;")
+                          actionButton("print_page", "Print to PDF", 
+                                      icon = icon("print"),
+                                      style = "width: 100%; background-color: #2980b9; color: white; border: none;")
                    )
                  )
              ),
@@ -361,17 +361,9 @@ server <- function(input, output) {
   )
   
   # --- IMAGE EXPORT ---
-observeEvent(input$screenshot, {
-    safe_name <- gsub("[^[:alnum:]]", "_", input$fac_name)
-    if(safe_name == "" || is.na(safe_name)) safe_name <- "Warnell_Outreach_Score"
-    
-    shinyscreenshot::screenshot(
-      selector = ".content-wrapper", # Focuses on the dashboard content specifically
-      filename = paste0(safe_name, "_", Sys.Date()),
-      scale = 2,                # Higher quality
-      downloadformat = "jpg"
-    )
-  })
+observeEvent(input$print_page, {
+    shinyjs::runjs("window.print();")
+})
 }
 
 shinyApp(ui, server)
