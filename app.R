@@ -356,7 +356,8 @@ server <- function(input, output) {
       )
       # In Shinylive, we must ensure the file is written to the provided path
       write.csv(export_df, file, row.names = FALSE)
-    }
+    },
+    contentType = "text/csv" # Adding this helps the browser identify the blob
   )
   
   # --- IMAGE EXPORT ---
@@ -365,7 +366,7 @@ observeEvent(input$screenshot, {
     if(safe_name == "" || is.na(safe_name)) safe_name <- "Warnell_Outreach_Score"
     
     shinyscreenshot::screenshot(
-      selector = "body",        # Captures the entire visible page
+      selector = ".content-wrapper", # Focuses on the dashboard content specifically
       filename = paste0(safe_name, "_", Sys.Date()),
       scale = 2,                # Higher quality
       downloadformat = "jpg"
