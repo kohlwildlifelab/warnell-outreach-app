@@ -97,14 +97,14 @@ ui <- dashboardPage(
                                 tags$th(class="cat-header", "Category"), 
                                 tags$th(class="qty-header", "Base Qty"), 
                                 tags$th(class="qty-header", "Prestige Qty"), 
-                                tags$th("Base Pts"), tags$th("Addl Prestige Pts"), tags$th("Total")
+                                tags$th("Base Pts"), tags$th("Prestige Pts"), tags$th("Total")
                               )
                             ),
                             tags$tbody(
                               tags$tr(tags$td(class="label-col", "Professional"), tags$td(numericInput("b_prof", NULL, 0, min=0)), tags$td(""), tags$td("2"), tags$td(""), tags$td(class="total-column", textOutput("t_prof_out", inline=T))),
                               tags$tr(tags$td(class="label-col", "Non-professional"), tags$td(numericInput("b_nprof", NULL, 0, min=0)), tags$td(""), tags$td("2"), tags$td(""), tags$td(class="total-column", textOutput("t_nprof_out", inline=T))),
-                              tags$tr(tags$td(class="label-col", "Invited"), tags$td(numericInput("b_inv", NULL, 0, min=0)), tags$td(numericInput("p_inv", NULL, 0, min=0)), tags$td("3"), tags$td("+1"), tags$td(class="total-column", textOutput("t_inv_out", inline=T))),
-                              tags$tr(tags$td(class="label-col", "Keynote"), tags$td(numericInput("b_key", NULL, 0, min=0)), tags$td(numericInput("p_key", NULL, 0, min=0)), tags$td("4.5"), tags$td("+2"), tags$td(class="total-column", textOutput("t_key_out", inline=T)))
+                              tags$tr(tags$td(class="label-col", "Invited"), tags$td(numericInput("b_inv", NULL, 0, min=0)), tags$td(numericInput("p_inv", NULL, 0, min=0)), tags$td("3"), tags$td("4"), tags$td(class="total-column", textOutput("t_inv_out", inline=T))),
+                              tags$tr(tags$td(class="label-col", "Keynote"), tags$td(numericInput("b_key", NULL, 0, min=0)), tags$td(numericInput("p_key", NULL, 0, min=0)), tags$td("4.5"), tags$td("6.5"), tags$td(class="total-column", textOutput("t_key_out", inline=T)))
                             )
                  )
              ),
@@ -125,10 +125,10 @@ ui <- dashboardPage(
                               )
                             ),
                             tags$tbody(
-                              tags$tr(tags$td(class="label-col", "Books"), tags$td(numericInput("q_book", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("15"), tags$td(""), tags$td(""), tags$td("+1"), tags$td(class="total-column", textOutput("t_book_out", inline=T))),
-                              tags$tr(tags$td(class="label-col", "Book Chapters"), tags$td(numericInput("q_chap", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("9"), tags$td(""), tags$td(""), tags$td("+1"), tags$td(class="total-column", textOutput("t_chap_out", inline=T))),
-                              tags$tr(tags$td(class="label-col", "Peer-reviewed Articles"), tags$td(numericInput("q_jrnl", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("9"), tags$td(""), tags$td(""), tags$td("+1"), tags$td(class="total-column", textOutput("t_jrnl_out", inline=T))),
-                              tags$tr(tags$td(class="label-col", "Proceedings"), tags$td(numericInput("q_proc", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("7"), tags$td(""), tags$td(""), tags$td("+1"), tags$td(class="total-column", textOutput("t_proc_out", inline=T))),
+                              tags$tr(tags$td(class="label-col", "Books"), tags$td(numericInput("q_book", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("15"), tags$td(""), tags$td(""), tags$td("16"), tags$td(class="total-column", textOutput("t_book_out", inline=T))),
+                              tags$tr(tags$td(class="label-col", "Book Chapters"), tags$td(numericInput("q_chap", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("9"), tags$td(""), tags$td(""), tags$td("10"), tags$td(class="total-column", textOutput("t_chap_out", inline=T))),
+                              tags$tr(tags$td(class="label-col", "Peer-reviewed Articles"), tags$td(numericInput("q_jrnl", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("9"), tags$td(""), tags$td(""), tags$td("10"), tags$td(class="total-column", textOutput("t_jrnl_out", inline=T))),
+                              tags$tr(tags$td(class="label-col", "Proceedings"), tags$td(numericInput("q_proc", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("7"), tags$td(""), tags$td(""), tags$td("8"), tags$td(class="total-column", textOutput("t_proc_out", inline=T))),
                               tags$tr(tags$td(class="label-col", "Outreach Document"), tags$td(numericInput("q_out", NULL, 0, min=0)), tags$td(numericInput("ma_out", NULL, 0, min=0)), tags$td(numericInput("mi_out", NULL, 0, min=0)), tags$td("5"), tags$td("1.5"), tags$td("2.5"), tags$td(""), tags$td(class="total-column", textOutput("t_out_out", inline=T))),
                               tags$tr(tags$td(class="label-col", "Technical Outreach Doc"), tags$td(numericInput("q_tech", NULL, 0, min=0)), tags$td(numericInput("ma_tech", NULL, 0, min=0)), tags$td(numericInput("mi_tech", NULL, 0, min=0)), tags$td("10"), tags$td("2.5"), tags$td("5"), tags$td(""), tags$td(class="total-column", textOutput("t_tech_out", inline=T))),
                               tags$tr(tags$td(class="label-col", "Gray Lit, Popular Press"), tags$td(numericInput("q_gray", NULL, 0, min=0)), tags$td(""), tags$td(""), tags$td("4"), tags$td(""), tags$td(""), tags$td(""), tags$td(class="total-column", textOutput("t_gray_out", inline=T))),
@@ -206,7 +206,7 @@ ui <- dashboardPage(
                               )
                             ),
                             tags$tbody(
-                              tags$tr(tags$td(class="label-col", "Award/Recognition"), tags$td(numericInput("aw_b", NULL, 0, min=0)), tags$td(numericInput("aw_p", NULL, 0, min=0)), tags$td("5"), tags$td("+7.5"), tags$td(class="total-column", textOutput("t_award_out", inline=T)))
+                              tags$tr(tags$td(class="label-col", "Award/Recognition"), tags$td(numericInput("aw_b", NULL, 0, min=0)), tags$td(numericInput("aw_p", NULL, 0, min=0)), tags$td("5"), tags$td("7.5"), tags$td(class="total-column", textOutput("t_award_out", inline=T)))
                             )
                  )
              ),
