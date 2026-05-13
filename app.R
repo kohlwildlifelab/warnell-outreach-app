@@ -44,7 +44,6 @@ custom_css <- "
   .label-col { font-style: italic; font-weight: 500; background-color: #fafafa; }
   .total-column { font-weight: bold; background-color: #f0f0f0 !important; }
   
-  /* CRITICAL CHANGE: Prevents labels from wrapping */
   .summary-row td { 
     border-left: none; border-right: none; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; 
     background-color: #ffffff !important;
@@ -100,7 +99,6 @@ ui <- dashboardPage(
                               tags$tr(tags$td(class="label-col", "Keynote"), tags$td(numericInput("b_key", NULL, 0)), tags$td(numericInput("p_key", NULL, 0)), tags$td("4.5"), tags$td("+2"), tags$td(class="total-column", textOutput("t_key_out", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=6, "")),
                               tags$tr(tags$td(colspan=5, style="border:none;"), tags$th(class="bottom-header", "Quantity")),
-                              # UPDATED: colspan=5 to allow expansion
                               tags$tr(class="summary-row", tags$td(colspan=5, style="font-weight:bold;","Total Outreach Presentations (Calculated):"), tags$td(class="data-box", textOutput("q_total_1", inline=T))),
                               tags$tr(class="summary-row", tags$td(colspan=5, style="font-weight:bold;","Total Research Presentations (Manual Entry):"), tags$td(class="data-box", numericInput("res_pres_qty", NULL, 0))),
                               tags$tr(class="white-spacer", tags$td(colspan=6, "")),
@@ -129,7 +127,6 @@ ui <- dashboardPage(
                               tags$tr(tags$td(class="label-col", "Social Media Products"), tags$td(numericInput("q_smprod", NULL, 0)), tags$td(""), tags$td(""), tags$td(""), tags$td("1.5"), tags$td(""), tags$td(""), tags$td(""), tags$td(class="total-column", textOutput("t_smprod_out", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=10, "")),
                               tags$tr(tags$td(colspan=9, style="border:none;"), tags$th(class="bottom-header", "Quantity")),
-                              # UPDATED: colspan=9 to allow expansion
                               tags$tr(class="summary-row", tags$td(colspan=9, style="font-weight:bold;","Total Outreach Publications (Calculated):"), tags$td(class="data-box", textOutput("q_total_2", inline=T))),
                               tags$tr(class="summary-row", tags$td(colspan=9, style="font-weight:bold;","Total Research Publications (Manual Entry):"), tags$td(class="data-box", numericInput("res_pub_qty", NULL, 0))),
                               tags$tr(class="white-spacer", tags$td(colspan=10, "")),
@@ -148,7 +145,6 @@ ui <- dashboardPage(
                               tags$tr(tags$td(class="label-col", "Events"), tags$td(numericInput("e_new", NULL, 0)), tags$td(numericInput("e_rep", NULL, 0)), tags$td(numericInput("e_sub", NULL, 0)), tags$td("9"), tags$td("2.25"), tags$td("13.5"), tags$td(class="total-column", textOutput("t_event_out", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=8, "")),
                               tags$tr(tags$td(colspan=7, style="border:none;"), tags$th(class="bottom-header", "Quantity")),
-                              # UPDATED: colspan=7 to allow expansion
                               tags$tr(class="summary-row", tags$td(colspan=7, style="font-weight:bold;","Total Outreach Events:"), tags$td(class="data-box", textOutput("q_total_3", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=8, "")),
                               tags$tr(class="subtotal-row", tags$td(colspan=7, "SUBTOTAL SCORE:"), tags$td(textOutput("s_total_3", inline=T)))
@@ -193,7 +189,6 @@ ui <- dashboardPage(
                                 tags$th(class="bottom-header", "Total Quantity"),
                                 tags$th(class="bottom-header", "Total Amount")
                               ),
-                              # UPDATED: colspan=7 to allow expansion
                               tags$tr(class="summary-row",
                                       tags$td(colspan=7, style="font-weight:bold;","Total Outreach Grants (Calculated):"),
                                       tags$td(class="data-box", textOutput("grand_q_out", inline=T)),
@@ -224,7 +219,6 @@ ui <- dashboardPage(
                               tags$tr(tags$td(class="label-col", "Email/Phone Support"), tags$td(numericInput("ta_remote", NULL, 0)), tags$td("0.2"), tags$td(class="total-column", textOutput("t_taremote_out", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=4, "")),
                               tags$tr(tags$td(colspan=3, style="border:none;"), tags$th(class="bottom-header", "Quantity")),
-                              # UPDATED: colspan=3 to allow expansion
                               tags$tr(class="summary-row", tags$td(colspan=3, style="font-weight:bold;","Total Actions (Calculated):"), tags$td(class="data-box", textOutput("q_total_5", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=4, "")),
                               tags$tr(class="subtotal-row", tags$td(colspan=3, "SUBTOTAL SCORE:"), tags$td(textOutput("s_total_5", inline=T)))
@@ -242,7 +236,6 @@ ui <- dashboardPage(
                               tags$tr(tags$td(class="label-col", "Award/Recognition"), tags$td(numericInput("aw_b", NULL, 0)), tags$td(numericInput("aw_p", NULL, 0)), tags$td("5"), tags$td("+2.5"), tags$td(class="total-column", textOutput("t_award_out", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=6, "")),
                               tags$tr(tags$td(colspan=5, style="border:none;"), tags$th(class="bottom-header", "Quantity")),
-                              # UPDATED: colspan=5 to allow expansion
                               tags$tr(class="summary-row", tags$td(colspan=5, style="font-weight:bold;","Total Awards (Calculated):"), tags$td(class="data-box", textOutput("q_total_6", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=6, "")),
                               tags$tr(class="subtotal-row", tags$td(colspan=5, "SUBTOTAL SCORE:"), tags$td(textOutput("s_total_6", inline=T)))
@@ -262,7 +255,6 @@ ui <- dashboardPage(
                               tags$tr(tags$td(class="label-col", "National/Press Release"), tags$td(numericInput("m_feat", NULL, 0)), tags$td("5"), tags$td(class="total-column", textOutput("t_mfeat_out", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=4, "")),
                               tags$tr(tags$td(colspan=3, style="border:none;"), tags$th(class="bottom-header", "Quantity")),
-                              # UPDATED: colspan=3 to allow expansion
                               tags$tr(class="summary-row", tags$td(colspan=3, style="font-weight:bold;","Total Media Items (Calculated):"), tags$td(class="data-box", textOutput("q_total_7", inline=T))),
                               tags$tr(class="white-spacer", tags$td(colspan=4, "")),
                               tags$tr(class="subtotal-row", tags$td(colspan=3, "SUBTOTAL SCORE:"), tags$td(textOutput("s_total_7", inline=T)))
@@ -299,8 +291,11 @@ ui <- dashboardPage(
 )
 
 server <- function(input, output, session) {
-  # Universal Weighting
-  w <- reactive({ 0.5 / max(0.01, as.numeric(input$fac_fte %||% 0.5)) })
+  # Universal Weighting with requirement check
+  w <- reactive({ 
+    req(input$fac_fte)
+    0.5 / max(0.01, as.numeric(input$fac_fte)) 
+  })
   
   # I Logic
   t_prof <- reactive({ calc_score(input$b_prof, 2, w()) })
@@ -371,7 +366,7 @@ server <- function(input, output, session) {
   output$s_total_5 <- renderText({ round(t_ta_site() + t_ta_rem(), 2) })
   
   # VI Logic
-  t_awd <- reactive({ calc_score(c(input$aw_b, input$aw_p), c(5, 7.5), 1.0) }) # Awards usually fixed
+  t_awd <- reactive({ calc_score(c(input$aw_b, input$aw_p), c(5, 7.5), 1.0) }) # Awards fixed weighting
   output$t_award_out <- renderText({ round(t_awd(), 2) })
   output$q_total_6 <- renderText({ sum(input$aw_b, input$aw_p, na.rm=T) })
   output$s_total_6 <- renderText({ round(t_awd(), 2) })
@@ -387,7 +382,11 @@ server <- function(input, output, session) {
   output$s_total_7 <- renderText({ round(t_mshort() + t_mnat() + t_mfeat(), 2) })
   
   # VIII Logic
-  spot_avg <- reactive({ (as.numeric(input$s_fac %||% 0) + as.numeric(input$s_ado %||% 0)) / 2 })
+  spot_avg <- reactive({ 
+    fac <- if(!is.null(input$s_fac)) as.numeric(input$s_fac) else 0
+    ado <- if(!is.null(input$s_ado)) as.numeric(input$s_ado) else 0
+    (fac + ado) / 2 
+  })
   t_spot <- reactive({ spot_avg() * w() })
   output$spot_avg_display <- renderText({ round(spot_avg(), 2) })
   output$t_spot_out <- renderText({ round(t_spot(), 2) })
@@ -399,15 +398,85 @@ server <- function(input, output, session) {
   })
   output$grand_total <- renderText({ round(grand_total_val(), 2) })
   
-  # --- EXPORT SERVER LOGIC ---
+  # --- FILTERED DETAILED CSV EXPORT ---
   output$downloadData <- downloadHandler(
-    filename = function() { paste0("Outreach_Score_", Sys.Date(), ".csv") },
+    filename = function() { 
+      file_name <- if(input$fac_name == "") "Outreach_Score" else gsub(" ", "_", input$fac_name)
+      paste0(file_name, "_Summary_", Sys.Date(), ".csv") 
+    },
     content = function(file) {
-      write.csv(data.frame(
-        Faculty = input$fac_name,
-        Total_Outreach_Score = round(grand_total_val(), 2),
-        Date = Sys.Date()
-      ), file, row.names=F)
+      # Helper to safely grab numeric inputs
+      get_val <- function(id) { if(is.null(input[[id]])) 0 else as.numeric(input[[id]]) }
+      
+      # 1. Create the full raw data frame
+      raw_export <- data.frame(
+        Category = c(
+          "FACULTY INFO", "Outreach FTE",
+          "I - PRESENTATIONS", "Professional", "Non-Professional", "Invited (Base)", "Invited (Prestige)", "Keynote (Base)", "Keynote (Prestige)", "Subtotal Section I",
+          "II - PUBLICATIONS", "Books (New)", "Books (Prestige)", "Chapters (New)", "Chapters (Prestige)", "Journal Articles (New)", "Journal Articles (Prestige)", "Proceedings (New)", "Proceedings (Prestige)", "Outreach Doc (New)", "Outreach Doc (Major)", "Outreach Doc (Minor)", "Tech Doc (New)", "Tech Doc (Major)", "Tech Doc (Minor)", "Gray Lit", "Apps/Web (New)", "Apps/Web (Major)", "Apps/Web (Minor)", "Podcasts", "Social Media Posts", "Social Media Products", "Subtotal Section II",
+          "III - EVENTS", "Events (New)", "Events (Repeated)", "Events (Substantial)", "Subtotal Section III",
+          "IV - FUNDING", "New (Small)", "New (Normal)", "New (Substantial)", "Ongoing (Small)", "Ongoing (Normal)", "Ongoing (Substantial)", "Subtotal Section IV",
+          "V - TECH ASSISTANCE", "On-Site Visits", "Remote Support", "Subtotal Section V",
+          "VI - AWARDS", "Awards (Base)", "Awards (Prestige)", "Subtotal Section VI",
+          "VII - MEDIA", "Short Interview", "Long Interview", "National/Press Release", "Subtotal Section VII",
+          "VIII - SPOTLIGHT", "Faculty Score", "ADO Score", "Subtotal Section VIII",
+          "GRAND TOTAL"
+        ),
+        Quantity = c(
+          NA, get_val("fac_fte"),
+          NA, get_val("b_prof"), get_val("b_nprof"), get_val("b_inv"), get_val("p_inv"), get_val("b_key"), get_val("p_key"), (t_prof() + t_nprof() + t_inv() + t_key()),
+          NA, get_val("q_book"), get_val("p_book"), get_val("q_chap"), get_val("p_chap"), get_val("q_jrnl"), get_val("p_jrnl"), get_val("q_proc"), get_val("p_proc"), get_val("q_out"), get_val("ma_out"), get_val("mi_out"), get_val("q_tech"), get_val("ma_tech"), get_val("mi_tech"), get_val("q_gray"), get_val("q_app"), get_val("ma_app"), get_val("mi_app"), get_val("q_pod"), get_val("q_smp"), get_val("q_smprod"), round(Reduce(`+`, t_pub_vals()), 2),
+          NA, get_val("e_new"), get_val("e_rep"), get_val("e_sub"), round(t_event(), 2),
+          NA, get_val("fn_s"), get_val("fn_n"), get_val("fn_sub"), get_val("fo_s"), get_val("fo_n"), get_val("fo_sub"), round(t_fnew() + t_fong(), 2),
+          NA, get_val("ta_site"), get_val("ta_remote"), round(t_ta_site() + t_ta_rem(), 2),
+          NA, get_val("aw_b"), get_val("aw_p"), round(t_awd(), 2),
+          NA, get_val("m_short"), get_val("m_nat"), get_val("m_feat"), round(t_mshort() + t_mnat() + t_mfeat(), 2),
+          NA, get_val("s_fac"), get_val("s_ado"), round(t_spot(), 2),
+          grand_total_val()
+        ),
+        Score = c(
+          NA, NA,
+          NA, NA, NA, NA, NA, NA, NA, round(t_prof() + t_nprof() + t_inv() + t_key(), 2),
+          NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, round(Reduce(`+`, t_pub_vals()), 2),
+          NA, NA, NA, NA, round(t_event(), 2),
+          NA, NA, NA, NA, NA, NA, NA, round(t_fnew() + t_fong(), 2),
+          NA, NA, NA, round(t_ta_site() + t_ta_rem(), 2),
+          NA, NA, NA, round(t_awd(), 2),
+          NA, NA, NA, NA, round(t_mshort() + t_mnat() + t_mfeat(), 2),
+          NA, NA, NA, round(t_spot(), 2),
+          round(grand_total_val(), 2)
+        ),
+        stringsAsFactors = FALSE
+      )
+      
+      # 2. Define logic for filtering
+      # We keep rows if:
+      # - It's a Section Header (Quantity is NA and it's uppercase)
+      # - Quantity is > 0
+      # - It's the Grand Total
+      
+      filtered_export <- raw_export[
+        is.na(raw_export$Quantity) | 
+          raw_export$Quantity > 0 | 
+          raw_export$Category == "GRAND TOTAL", 
+      ]
+      
+      # 3. Final Clean-up: Remove headers that have no data underneath them
+      # (Optional, but keeps the CSV very clean)
+      header_indices <- which(is.na(filtered_export$Quantity))
+      to_remove <- c()
+      for(i in seq_along(header_indices)){
+        idx <- header_indices[i]
+        next_idx <- if(i < length(header_indices)) header_indices[i+1] else nrow(filtered_export) + 1
+        # If the distance between this header and the next is only 1, the header is empty
+        if(next_idx - idx == 1 && filtered_export$Category[idx] != "GRAND TOTAL"){
+          to_remove <- c(to_remove, idx)
+        }
+      }
+      
+      if(length(to_remove) > 0) filtered_export <- filtered_export[-to_remove, ]
+      
+      write.csv(filtered_export, file, row.names = FALSE, na = "")
     }
   )
   
